@@ -6,8 +6,9 @@ application = Flask(__name__)
 def index():
     return render_template('home.html')
 
-@application.route('/blog')
-def blog():
+@application.route('/blog/<blogType>')
+def blog(blogType):
+    print(blogType)
     return render_template('blogDisplay.html')
 
 if __name__=='__main__':
