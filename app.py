@@ -8,6 +8,8 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+import models
+
 @app.route('/')
 def index():
     return render_template('home.html')
