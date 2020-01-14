@@ -8,11 +8,16 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+#Make sure to set FLASK_APP=app.py
 import models
 
 @app.route('/')
 def index():
     return render_template('home.html')
+
+@app.route('/login')
+def login():
+    return '<h1>Login Page under construction</h1>'
 
 @app.route('/blog/<blogType>')
 def blog(blogType):
