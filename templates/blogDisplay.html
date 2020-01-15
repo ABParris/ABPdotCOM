@@ -1,18 +1,19 @@
 <html>
     <h1>BlogObject Type</h1>
     <body>
+        {%for blogObject in posts%}
         <div class="blogItem">
             <div style="padding: 10px;">
-                <h2>BlogObject 2</h2>
+                {{blogObject.image}}
+                <h2>{{blogObject.title}}</h2>
+                {{blogObject.timestamp}}
                 <div>Description:</div>
                 <div class="description">
-                    This is a blog post that is full of very cool stuff like this and that and this and those and these. 
-                    It's really, really, really interesting and there is much to learn from it. Take a gander at the importance
-                    of this post.
+                    {{blogObject.description}}
                 </div>
-            </div>
-                
-            </div>
+            </div>  
+        </div>
+        {%endfor%}
     </body>
 </html>
 
