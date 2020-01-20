@@ -1,12 +1,23 @@
 from flask import render_template
 from settings import app, db
 from flask_migrate import Migrate
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 migrate = Migrate(app, db)
 
 #Make sure to set FLASK_APP=app.py
 import models
+
+def addUser(u, r, p):
+    user = models.User(username=u, role=r, password_hash=generate_password_hash(p))
+    db.session.add(user)
+    db.session.commit()
+
+def addPost(b, t, i, d, u):
+    post = models.BlogObject(blogType=b, title=t, image=i, description=d, user=u)
+    db.session.add(post)
+    db.session.commit()
 
 @app.route('/')
 def index():
@@ -16,24 +27,17 @@ def index():
 def login():
     return '<h1>Login Page under construction</h1>'
 
+@app.route('/newPost', methods=['GET', 'POST'])
+def post():
+    return '<h1>This Page will be a new post form</h1>'
+
+@app.route('/newAdmin')
+def admin():
+    return '<h1>This page will allow registeration of new admin</h1>'
+
 @app.route('/blog/<blogType>')
 def blog(blogType):
-    user = models.User(username='Admin', role='admin', password_hash='')
-    db.session.add(user)
-    db.session.commit()
-    user = models.User.query.get(1)
-    print(user)
-    post3 = models.BlogObject(blogType='research', title='post three', image='image', description='Just a short discription', user=user)
-    post4 = models.BlogObject(blogType='research', title='post four', image='image', description='Just a short discription about the post', user=user)
-    post5 = models.BlogObject(blogType='research', title='post five', image='image', description="let's see if this string appears", user=user)
-    post6 = models.BlogObject(blogType='research', title='post six', image='image', description="let's see if this string appears", user=user)
-    post7 = models.BlogObject(blogType='research', title='post seven', image='image', description="let's see if this string appears", user=user)
-    db.session.add(post7)
-    db.session.add(post4)
-    db.session.commit()
-    post8 = models.BlogObject(blogType='research', title='post eight', image='image', description="let's see if this string appears", user=user)
     posts = models.BlogObject.query.all()
-    print(posts)
     return render_template('blogDisplay.html', blogType=blogType, posts=posts)
 
 if __name__=='__main__':
