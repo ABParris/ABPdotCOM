@@ -1,10 +1,12 @@
 <html>
-    <h1>BlogObject Type</h1>
+    <h1>{{blogType}}</h1>
+    <button>Add post</button>
     <body>
         {%for blogObject in posts%}
         <div class="blogItem">
             <div style="padding: 10px;">
-                {{blogObject.image}}
+                <img src="{{url_for('static', filename='images/image.jpg')}}" width="42" height="42">
+                <!-- {{blogObject.image}} -->
                 <h2>{{blogObject.title}}</h2>
                 {{blogObject.timestamp}}
                 <div>Description:</div>
@@ -18,6 +20,10 @@
 </html>
 
 <style>
+    button{
+        background-color: blueviolet;
+        color: cornsilk;
+    }
     .blogItem{
         background-color: #fff;
         width: auto;

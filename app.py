@@ -1,8 +1,7 @@
-from flask import render_template
+from flask import render_template, url_for
 from settings import app, db
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
-
 
 migrate = Migrate(app, db)
 
