@@ -2,11 +2,23 @@ from flask import render_template, url_for
 from settings import app, db
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_wtf import FlaskForm
+from wtforms import StringField, FileField, PasswordField
+from wtforms.validators import InputRequired, Length
 
 migrate = Migrate(app, db)
 
 #Make sure to set FLASK_APP=app.py
 import models
+
+class RegisterForm(FlaskForm):
+    blogType = StringField('Blog Type')
+    title = StringField('Title')
+    description = StringField('Description')
+    user = StringField('User')
+    image = FileField()
+
+    
 
 def addUser(u, r, p):
     user = models.User(username=u, role=r, password_hash=generate_password_hash(p))
@@ -28,6 +40,8 @@ def login():
 
 @app.route('/newPost', methods=['GET', 'POST'])
 def post():
+
+    addPost()
     return '<h1>This Page will be a new post form</h1>'
 
 @app.route('/newAdmin')
@@ -38,6 +52,12 @@ def admin():
 def blog(blogType):
     posts = models.BlogObject.query.all()
     return render_template('blogDisplay.html', blogType=blogType, posts=posts)
+
+@app.route('/blogform')
+def blogform():
+    form = RegisterForm()
+    return render_template('form.html', form=form)
+
 
 if __name__=='__main__':
     app.run(debug=True, port=8080)

@@ -11,8 +11,6 @@ class User(db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
-
-
 class BlogObject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     blogType = db.Column(db.String(10))
