@@ -1,12 +1,18 @@
-from flask import render_template, url_for
+from flask import render_template, url_for, request, url_for
+import os
 from settings import app, db
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_wtf import FlaskForm
-from wtforms import StringField, FileField, PasswordField
+from wtforms import StringField, PasswordField
+from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import InputRequired, Length
 
 migrate = Migrate(app, db)
+UPLOAD_FOLDER = app.instance_path + '\static\images'
+ALLOWED_EXTENSIONS = {'jpg', 'png'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #Make sure to set FLASK_APP=app.py
 import models
@@ -55,10 +61,14 @@ def blogform():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        user = models.User.query.get(1)
-        addPost(form.blogType.data, form.title.data, "image.jpg", form.description.data, user)
-        posts = models.BlogObject.query.all()
-        return render_template('blogDisplay.html', blogType="whatever", posts=posts)
+        file = form.image.data
+        filename = secure_filename(file.filename)
+        file.save(os.path.join('static\images', filename))
+        #user = models.User.query.get(1)
+        #addPost(form.blogType.data, form.title.data, "image.jpg", form.description.data, user)
+        #posts = models.BlogObject.query.all()
+        #return render_template('blogDisplay.html', blogType="whatever", posts=posts)
+        return '<h1>{}</h1>'.format(filename)
 
     return render_template('form.html', form=form)
 
