@@ -18,8 +18,6 @@ class RegisterForm(FlaskForm):
     user = StringField('User')
     image = FileField()
 
-    
-
 def addUser(u, r, p):
     user = models.User(username=u, role=r, password_hash=generate_password_hash(p))
     db.session.add(user)
@@ -40,8 +38,7 @@ def login():
 
 @app.route('/newPost', methods=['GET', 'POST'])
 def post():
-
-    addPost()
+    #addPost()
     return '<h1>This Page will be a new post form</h1>'
 
 @app.route('/newAdmin')
@@ -53,9 +50,13 @@ def blog(blogType):
     posts = models.BlogObject.query.all()
     return render_template('blogDisplay.html', blogType=blogType, posts=posts)
 
-@app.route('/blogform')
+@app.route('/blogform', methods=['GET', 'POST'])
 def blogform():
     form = RegisterForm()
+
+    if form.validate_on_submit():
+        return '<h1>User: {}, blogType: {}, Title: {}, description: {}</h1>'.format(form.user.data, form.blogType.data, form.title.data, form.description.data)
+
     return render_template('form.html', form=form)
 
 

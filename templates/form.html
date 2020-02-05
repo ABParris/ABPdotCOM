@@ -1,5 +1,4 @@
 <html>
-    
     <body>
         <h1>
             Alexander Benton Parris
@@ -8,21 +7,24 @@
             {{form.csrf_token}}
 
             <div>
-               {{form.blogType(class="form_piece", placeholder="Blogtype?")}} 
+               {{form.blogType(class="form_piece", placeholder="Blog Type")}} 
             </div>
             <div>
-                {{form.title}} 
+                {{form.title(placeholder="Title")}} 
              </div>
              <div>
-                {{form.description}} 
+                {{form.description(placeholder="Description")}} 
              </div>
              <div>
-                {{form.user}} 
+                 <p>art or research</p>
+                {{form.user(placeholder="Username")}} 
              </div>
              <div>
                 {{form.image}} 
              </div>
-
+            <div>
+                <button type="submit">Post</button>
+            </div>
         </form>
     </body>
 </html>
