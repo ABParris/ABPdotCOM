@@ -34,7 +34,7 @@ def index():
 
 @app.route('/login')
 def login():
-    return '<h1>Login Page under construction</h1>'
+    return render_template('login.html')
 
 @app.route('/newPost', methods=['GET', 'POST'])
 def post():
