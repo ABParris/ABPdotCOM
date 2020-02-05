@@ -55,7 +55,10 @@ def blogform():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        return '<h1>User: {}, blogType: {}, Title: {}, description: {}</h1>'.format(form.user.data, form.blogType.data, form.title.data, form.description.data)
+        user = models.User.query.get(1)
+        addPost(form.blogType.data, form.title.data, "image.jpg", form.description.data, user)
+        posts = models.BlogObject.query.all()
+        return render_template('blogDisplay.html', blogType="whatever", posts=posts)
 
     return render_template('form.html', form=form)
 
