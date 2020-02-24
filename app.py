@@ -64,10 +64,10 @@ def blogform():
         file = form.image.data
         filename = secure_filename(file.filename)
         file.save(os.path.join('static\images', filename))
-        #user = models.User.query.get(1)
-        #addPost(form.blogType.data, form.title.data, "image.jpg", form.description.data, user)
-        #posts = models.BlogObject.query.all()
-        #return render_template('blogDisplay.html', blogType="whatever", posts=posts)
+        user = models.User.query.get(1)
+        addPost(form.blogType.data, form.title.data, url_for('static', 'images'+filename), form.description.data, user)
+        posts = models.BlogObject.query.all()
+        return render_template('blogDisplay.html', blogType="whatever", posts=posts)
         return '<h1>{}</h1>'.format(filename)
 
     return render_template('form.html', form=form)
