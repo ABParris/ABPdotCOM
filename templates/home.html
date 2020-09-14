@@ -1,5 +1,6 @@
 <html>
     <body>
+        <div id="root"></div>
         <h1>
             Alexander Benton Parris
         </h1>
@@ -22,3 +23,20 @@
         </ul>
     </body>
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+<script type="text/jsx">
+    function tick() {
+        const element = (
+            <div>
+                <h1>Hello, world!</h1>
+                <h2>It is {new Date().toLocaleTimeString()}.</h2>
+            </div>
+        );
+        ReactDOM.render(element, document.getElementById('root'));
+    }
+
+    setInterval(tick,1000);
+</script>
