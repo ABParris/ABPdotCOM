@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
-from flask_wtf.file import FileField, FileAllowed
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import InputRequired, Length
 
 migrate = Migrate(app, db)
@@ -58,14 +58,16 @@ def blog(blogType):
 
 @app.route('/blogform', methods=['GET', 'POST'])
 def blogform():
+    
     form = RegisterForm()
 
     if form.validate_on_submit():
+        print(""+form.blogType.data+" "+form.title.data+" "+form.description.data+" "+form.user.data+" "+form.image.data.filename)
         file = form.image.data
         filename = secure_filename(file.filename)
-        file.save(os.path.join('static\images', filename))
+        file.save(os.path.join(r'C:\Users\Alexander Parris\Desktop\Projects\Websites\ABPdotCOM\ABPdotCOM\static\images', filename))
         user = models.User.query.get(1)
-        addPost(form.blogType.data, form.title.data, url_for('static', 'images'+filename), form.description.data, user)
+        addPost(form.blogType.data, form.title.data, url_for('static', filename='images/'+filename), form.description.data, user)
         posts = models.BlogObject.query.all()
         return render_template('blogDisplay.html', blogType="whatever", posts=posts)
         return '<h1>{}</h1>'.format(filename)

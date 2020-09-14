@@ -5,8 +5,7 @@
         {%for blogObject in posts%}
         <div class="blogItem">
             <div style="padding: 10px;">
-                <img src="{{url_for('static', filename='images/image.jpg')}}" width="42" height="42">
-                <!-- {{blogObject.image}} -->
+                <img src="{{blogObject.image}}" width="42" height="42">
                 <h2>{{blogObject.title}}</h2>
                 {{blogObject.timestamp}}
                 <div>Description:</div>
